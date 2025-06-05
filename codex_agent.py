@@ -1,15 +1,29 @@
 # codex_agent.py
 
+import os
 import openai
 
-openai.api_key = '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'  # replace with your OpenAI API key
+# Configure the OpenAI API key via environment variable when needed
+openai.api_key = os.getenv("OPENAI_API_KEY", "")
 
 def codex_agent(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-4-turbo",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.5
-    )
-    answer = response.choices[0].message.content.strip()
+    """Send a prompt to the OpenAI API and return the assistant's reply."""
+    if not openai.api_key:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY environment variable is not set")
+        openai.api_key = api_key
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.5,
+        )
+        answer = response.choices[0].message.content.strip()
+    except Exception as exc:
+        print(f"OpenAI API request failed: {exc}")
+        return ""
+
     print(f"Codex suggests: {answer}")
     return answer
