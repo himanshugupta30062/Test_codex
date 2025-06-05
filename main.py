@@ -5,9 +5,11 @@ from codex_agent import codex_agent
 
 env = Environment()
 state = env.reset()
+done = False
 
-for _ in range(3):
-    prompt = f"The current state is {state}. Suggest a helpful next action."
+while not done:
+    user_text = input("Enter additional instructions (or press Enter for none): ")
+    prompt = f"The current state is {state}. {user_text} Suggest a helpful next action."
     action_str = codex_agent(prompt)
     action = {"suggested_action": action_str}
 
@@ -16,4 +18,3 @@ for _ in range(3):
 
     if done:
         print("Task completed!")
-        break
