@@ -28,3 +28,30 @@ def codex_agent(prompt):
 
     print(f"Codex suggests: {answer}")
     return answer
+
+
+def verify_openai_key() -> bool:
+    """Check that the configured OpenAI API key is valid by making a tiny request."""
+    if not openai.api_key:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            print("OPENAI_API_KEY environment variable is not set")
+            return False
+        openai.api_key = api_key
+
+    try:
+        # Perform a minimal request just to verify that authentication works
+        openai.chat.completions.create(
+            model="gpt-4-turbo",
+            messages=[{"role": "user", "content": "ping"}],
+            max_tokens=1,
+        )
+    except openai.AuthenticationError as exc:
+        print(f"OpenAI API key authentication failed: {exc}")
+        return False
+    except openai.OpenAIError as exc:
+        print(f"OpenAI API request failed: {exc}")
+        return False
+
+    print("OpenAI API key appears to be valid!")
+    return True
