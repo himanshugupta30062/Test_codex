@@ -7,6 +7,16 @@ Set `OPENAI_API_KEY` in your environment before running `main.py` or the web dem
 export OPENAI_API_KEY=YOUR_KEY_HERE
 ```
 
+### Application configuration
+
+The Flask demo reads its configuration from environment variables or an optional
+JSON file. The following variables can be set:
+
+- `FLASK_SECRET_KEY` – value for `app.secret_key` used to sign sessions.
+- `FLASK_USERS_JSON` – JSON object mapping usernames to passwords.
+- `APP_CONFIG_FILE` – path to a JSON file containing `{"secret_key": "...", "users": {...}}`.
+  Values from environment variables override the file.
+
 If you encounter compatibility errors with the OpenAI package, try upgrading or pinning the package version as specified in `requirements.txt`:
 
 ```bash
