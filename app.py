@@ -9,10 +9,36 @@ from flask import (
 )
 from codex_agent import codex_agent
 
-app = Flask(__name__)
-app.secret_key = 'change-me'
 
-USERS = {"admin": "password"}
+def load_settings():
+    """Load the Flask secret key and user credentials."""
+    import json
+    import os
+
+    config_path = os.getenv("APP_CONFIG_FILE")
+    cfg = {}
+    if config_path and os.path.exists(config_path):
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+        except Exception:
+            cfg = {}
+
+    secret_key = os.getenv("FLASK_SECRET_KEY", cfg.get("secret_key", "change-me"))
+    users_json = os.getenv("FLASK_USERS_JSON")
+    if users_json:
+        try:
+            users = json.loads(users_json)
+        except json.JSONDecodeError:
+            users = {}
+    else:
+        users = cfg.get("users", {"admin": "password"})
+
+    return secret_key, users
+
+
+app = Flask(__name__)
+app.secret_key, USERS = load_settings()
 
 def login_required(func):
     from functools import wraps
