@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Group Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Reading Group Hub</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#groups">Groups</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Welcome to the Reading Group Hub</h1>
+        <p>Join or create book clubs, watch videos, listen to podcasts and connect with readers worldwide.</p>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About</h2>
+        <p>This startup aims to revive the reading culture. Our web app helps you connect with people reading the same book. Discuss, share doubts, and meet fellow readers online or at physical centers in the future.</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/oEBNiF-bKuw" title="Book Talk" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section id="books" class="section">
+        <h2>Books Library</h2>
+        <p>Browse thousands of books, read summaries, listen to podcasts or watch video reviews, and rate your favourites.</p>
+    </section>
+
+    <section id="groups" class="section">
+        <h2>Reading Groups</h2>
+        <p>Create or join a group to discuss your current read, share recommendations and even video conference with authors.</p>
+        <form class="join-form">
+            <label>Group Name
+                <input type="text" placeholder="Book Lovers" required>
+            </label>
+            <label>Your Email
+                <input type="email" placeholder="you@example.com" required>
+            </label>
+            <button type="submit">Join Group</button>
+        </form>
+    </section>
+
+    <section id="chat" class="section chat">
+        <h2>Community Chat</h2>
+        <div id="chat-box" class="chat-box">
+            <div id="messages" class="messages"></div>
+            <form id="chat-form" class="chat-form">
+                <input id="chat-input" type="text" placeholder="Type a message" required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <h2>Contact Us</h2>
+        <form>
+            <label>Name
+                <input type="text" placeholder="Your name" required>
+            </label>
+            <label>Email
+                <input type="email" placeholder="Your email" required>
+            </label>
+            <label>Message
+                <textarea placeholder="Message" required></textarea>
+            </label>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <footer>
+        &copy; 2024 Reading Group Hub. All rights reserved.
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

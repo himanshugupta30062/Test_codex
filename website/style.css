@@ -1,0 +1,155 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: #fdfdfd;
+}
+
+.navbar {
+    background: #0d47a1;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.hero {
+    background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 8rem 1rem;
+}
+
+.section {
+    padding: 4rem 1rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.join-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.join-form button {
+    width: 150px;
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    background: #0d47a1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contact input,
+.contact textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.contact button {
+    width: 150px;
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    background: #0d47a1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+footer {
+    background: #eee;
+    text-align: center;
+    padding: 1rem;
+}
+
+.chat-box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    background: #fafafa;
+}
+
+.messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    max-width: 75%;
+}
+
+.message.you {
+    background: #dcf8c6;
+    align-self: flex-end;
+}
+
+.chat-form {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+.chat-form input {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+}
+
+.chat-form button {
+    background: #0d47a1;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
