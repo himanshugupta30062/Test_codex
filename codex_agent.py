@@ -15,7 +15,7 @@ def codex_agent(prompt):
         openai.api_key = api_key
 
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4-turbo",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.5,
