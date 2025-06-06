@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+.container {
+    flex: 1;
+    display: flex;
+}
+.sidebar {
+    width: 250px;
+    background: #f0f0f0;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #ccc;
+}
+.sidebar h3 {
+    margin-top: 0;
+}
+.chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+#chat {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+#question {
+    width: 100%;
+    min-height: 50px;
+    resize: none;
+    padding: 10px;
+}
+.buttons {
+    margin-top: 5px;
+}
+button {
+    padding: 8px 16px;
+    margin-right: 5px;
+}
+.logo {
+    display: inline-block;
+    width: 32px;
+    text-align: center;
+    vertical-align: middle;
+}
+.message.user {
+    font-weight: bold;
+}
+.message.assistant {
+    color: green;
+}

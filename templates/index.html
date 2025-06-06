@@ -2,27 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple ChatGPT Clone</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
-        .message { margin-bottom: 10px; }
-        .user { font-weight: bold; }
-        .assistant { color: green; }
-    </style>
+    <title>Chat Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-<h1>Simple ChatGPT Clone</h1>
-<div id="chat"></div>
-<input type="text" id="question" placeholder="Type your question" style="width:80%" />
-<button onclick="sendQuestion()">Send</button>
+<div class="container">
+    <div class="sidebar">
+        <h3>History</h3>
+        <ul id="history"></ul>
+    </div>
+    <div class="chat">
+        <h1><span class="logo">🤖</span> Chat Demo</h1>
+        <div id="chat"></div>
+        <textarea id="question" placeholder="Type your question"></textarea>
+        <div class="buttons">
+            <button id="askBtn">Ask</button>
+            <button id="clearBtn">Clear</button>
+        </div>
+    </div>
+</div>
 <script>
+const historyList = document.getElementById('history');
+const chatDiv = document.getElementById('chat');
+const textarea = document.getElementById('question');
+
+function autoResize() {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+}
+textarea.addEventListener('input', autoResize);
+
 async function sendQuestion() {
-    const input = document.getElementById('question');
-    const question = input.value;
+    const question = textarea.value.trim();
     if (!question) return;
     appendMessage('user', question);
-    input.value = '';
+    textarea.value = '';
+    autoResize();
     const response = await fetch('/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -30,15 +45,31 @@ async function sendQuestion() {
     });
     const data = await response.json();
     appendMessage('assistant', data.answer);
+    addToHistory(question, data.answer);
 }
+
 function appendMessage(role, text) {
-    const chat = document.getElementById('chat');
     const div = document.createElement('div');
     div.className = 'message ' + role;
     div.textContent = (role === 'user' ? 'You: ' : 'Assistant: ') + text;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
+    chatDiv.appendChild(div);
+    chatDiv.scrollTop = chatDiv.scrollHeight;
 }
+
+function addToHistory(q, a) {
+    const li = document.createElement('li');
+    li.textContent = q;
+    li.onclick = () => alert(a);
+    historyList.appendChild(li);
+}
+
+function clearChat() {
+    chatDiv.innerHTML = '';
+    historyList.innerHTML = '';
+}
+
+document.getElementById('askBtn').addEventListener('click', sendQuestion);
+document.getElementById('clearBtn').addEventListener('click', clearChat);
 </script>
 </body>
 </html>
