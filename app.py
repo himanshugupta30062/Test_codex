@@ -1,3 +1,5 @@
+"""Flask web application providing a simple interface to the Codex agent."""
+
 from flask import (
     Flask,
     request,

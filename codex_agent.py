@@ -1,4 +1,5 @@
 # codex_agent.py
+"""Utility functions for sending prompts to the OpenAI API."""
 
 import os
 import openai

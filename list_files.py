@@ -1,3 +1,5 @@
+"""Utility for listing files tracked in a given git branch."""
+
 import subprocess
 from typing import List
 
