@@ -21,7 +21,7 @@ def codex_agent(prompt):
             temperature=0.5,
         )
         answer = response.choices[0].message.content.strip()
-    except Exception as exc:
+    except openai.OpenAIError as exc:
         print(f"OpenAI API request failed: {exc}")
         return ""
 

@@ -1,5 +1,6 @@
 import os
 from unittest.mock import MagicMock, patch
+import openai
 
 from codex_agent import codex_agent
 
@@ -13,4 +14,12 @@ def test_codex_agent_returns_response(monkeypatch):
     with patch('openai.chat.completions.create', return_value=mock_resp) as mock_create:
         result = codex_agent('hi')
         assert result == 'hello'
+        mock_create.assert_called_once()
+
+
+def test_codex_agent_handles_openai_error(monkeypatch):
+    os.environ['OPENAI_API_KEY'] = 'test'
+    with patch('openai.chat.completions.create', side_effect=openai.OpenAIError('fail')) as mock_create:
+        result = codex_agent('hi')
+        assert result == ''
         mock_create.assert_called_once()
