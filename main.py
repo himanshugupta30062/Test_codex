@@ -1,4 +1,5 @@
 # main.py
+"""Command-line demo for interacting with the Environment via the Codex agent."""
 
 from environment import Environment
 from codex_agent import codex_agent

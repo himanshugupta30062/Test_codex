@@ -1,4 +1,5 @@
 # environment.py
+"""Simple environment that counts steps and provides basic rewards."""
 
 class Environment:
     """A small environment that tracks how many actions have been taken."""
