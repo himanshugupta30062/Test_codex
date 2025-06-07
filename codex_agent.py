@@ -4,19 +4,25 @@
 import os
 import openai
 
-# Configure the OpenAI API key via environment variable when needed
-openai.api_key = os.getenv("OPENAI_API_KEY", "")
+# Lazily initialised OpenAI client
+_client = None
 
-def codex_agent(prompt):
-    """Send a prompt to the OpenAI API and return the assistant's reply."""
-    if not openai.api_key:
+
+def _get_client() -> openai.OpenAI:
+    """Return a configured OpenAI client, creating it if necessary."""
+    global _client
+    if _client is None:
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             raise ValueError("OPENAI_API_KEY environment variable is not set")
-        openai.api_key = api_key
+        _client = openai.OpenAI(api_key=api_key)
+    return _client
 
+def codex_agent(prompt: str) -> str:
+    """Send a prompt to the OpenAI API and return the assistant's reply."""
+    client = _get_client()
     try:
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-4-turbo",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.5,
@@ -32,16 +38,15 @@ def codex_agent(prompt):
 
 def verify_openai_key() -> bool:
     """Check that the configured OpenAI API key is valid by making a tiny request."""
-    if not openai.api_key:
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            print("OPENAI_API_KEY environment variable is not set")
-            return False
-        openai.api_key = api_key
+    try:
+        client = _get_client()
+    except ValueError:
+        print("OPENAI_API_KEY environment variable is not set")
+        return False
 
     try:
         # Perform a minimal request just to verify that authentication works
-        openai.chat.completions.create(
+        client.chat.completions.create(
             model="gpt-4-turbo",
             messages=[{"role": "user", "content": "ping"}],
             max_tokens=1,
