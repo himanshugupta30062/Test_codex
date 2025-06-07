@@ -46,6 +46,15 @@ body {
     flex-direction: column;
     background: #fff;
 }
+
+.main.start {
+    justify-content: center;
+    align-items: center;
+}
+
+.main.start .chat {
+    display: none;
+}
 .welcome {
     text-align: center;
     margin-top: 40px;
@@ -63,6 +72,16 @@ body {
     justify-content: center;
     padding: 20px;
     border-top: 1px solid #eee;
+}
+
+.input-area.start {
+    flex-direction: column;
+    border-top: none;
+}
+
+.input-area.start button {
+    margin-left: 0;
+    margin-top: 10px;
 }
 .input-wrapper {
     position: relative;

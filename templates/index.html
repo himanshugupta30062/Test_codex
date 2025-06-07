@@ -11,10 +11,10 @@
         <div class="logo">🤖 ChatDemo</div>
         <ul id="history" class="chats"></ul>
     </aside>
-    <main class="main">
+    <main id="main" class="main start">
         <div id="welcome" class="welcome">Type and Ask anything</div>
         <div id="chat" class="chat"></div>
-        <div class="input-area">
+        <div id="inputArea" class="input-area start">
             <div class="input-wrapper">
                 <input id="question" type="text" placeholder="Type here" />
                 <span class="icon" title="Insert image/video">📎</span>
@@ -29,6 +29,8 @@ const historyList = document.getElementById('history');
 const chatDiv = document.getElementById('chat');
 const input = document.getElementById('question');
 const welcome = document.getElementById('welcome');
+const main = document.getElementById('main');
+const inputArea = document.getElementById('inputArea');
 
 input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
@@ -40,6 +42,10 @@ input.addEventListener('keypress', (e) => {
 async function sendQuestion() {
     const question = input.value.trim();
     if (!question) return;
+    if (main.classList.contains('start')) {
+        main.classList.remove('start');
+        inputArea.classList.remove('start');
+    }
     appendMessage('user', question);
     input.value = '';
     welcome.style.display = 'none';
@@ -73,6 +79,8 @@ function clearChat() {
     chatDiv.innerHTML = '';
     historyList.innerHTML = '';
     welcome.style.display = 'block';
+    main.classList.add('start');
+    inputArea.classList.add('start');
 }
 
 document.getElementById('askBtn').addEventListener('click', sendQuestion);
