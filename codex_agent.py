@@ -23,7 +23,7 @@ def codex_agent(prompt: str) -> str:
     client = _get_client()
     try:
         response = client.chat.completions.create(
-            model="gpt-4-turbo",
+            model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.5,
         )
@@ -47,7 +47,7 @@ def verify_openai_key() -> bool:
     try:
         # Perform a minimal request just to verify that authentication works
         client.chat.completions.create(
-            model="gpt-4-turbo",
+            model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": "ping"}],
             max_tokens=1,
         )
