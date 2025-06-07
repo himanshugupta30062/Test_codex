@@ -2,54 +2,121 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
     height: 100vh;
+    display: flex;
+    color: #333;
+    box-sizing: border-box;
 }
+
+/* Ensure all elements size consistently */
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
 .container {
     flex: 1;
     display: flex;
 }
+
 .sidebar {
-    width: 250px;
-    background: #f0f0f0;
+    width: 260px;
+    background: #202123;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar .logo {
     padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #333;
+}
+.chats {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    flex: 1;
     overflow-y: auto;
-    border-right: 1px solid #ccc;
 }
-.sidebar h3 {
-    margin-top: 0;
+.chats li {
+    padding: 8px;
+    margin-bottom: 6px;
+    background: #2d2e30;
+    border-radius: 4px;
+    cursor: pointer;
 }
-.chat {
+
+.main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    background: #fff;
 }
-#chat {
-    flex: 1;
-    border: 1px solid #ccc;
-    padding: 10px;
-    overflow-y: auto;
-    margin-bottom: 10px;
+
+.main.start {
+    justify-content: center;
+    align-items: center;
 }
-#question {
-    width: 100%;
-    min-height: 50px;
-    resize: none;
-    padding: 10px;
+
+.main.start .chat {
+    display: none;
 }
-.buttons {
-    margin-top: 5px;
-}
-button {
-    padding: 8px 16px;
-    margin-right: 5px;
-}
-.logo {
-    display: inline-block;
-    width: 32px;
+.welcome {
     text-align: center;
-    vertical-align: middle;
+    margin: 0 0 40px;
+    font-size: 24px;
+    color: #888;
+}
+.chat {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+.input-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-top: 1px solid #eee;
+    width: 100%;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.input-area.start {
+    flex-direction: column;
+    border-top: none;
+    align-items: center;
+}
+
+.input-area.start button {
+    margin-left: 0;
+    margin-top: 10px;
+}
+.input-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 600px;
+}
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+.input-wrapper .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.input-area button {
+    margin-left: 10px;
+    padding: 8px 16px;
 }
 .message.user {
     font-weight: bold;
