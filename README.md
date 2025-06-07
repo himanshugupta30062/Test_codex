@@ -7,6 +7,15 @@ Set `OPENAI_API_KEY` in your environment before running `main.py` or the web dem
 export OPENAI_API_KEY=YOUR_KEY_HERE
 ```
 
+## Clone the repository
+
+Clone the project and enter the directory:
+
+```bash
+git clone https://github.com/himanshugupta30062/Test_codex.git
+cd Test_codex
+```
+
 ### Application configuration
 
 The Flask demo reads its configuration from environment variables or an optional
