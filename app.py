@@ -57,7 +57,8 @@ def login_required(func):
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    username = session.get('username')
+    return render_template('index.html', username=username)
 
 @app.route('/ask', methods=['POST'])
 def ask():

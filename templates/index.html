@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+<header class="topbar">
+    <div class="welcome-user">Logged in as {{ username }}</div>
+    <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+</header>
 <div class="container">
     <aside class="sidebar">
         <div class="logo">🤖 ChatDemo</div>
