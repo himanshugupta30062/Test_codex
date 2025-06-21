@@ -1,52 +1,48 @@
 import os
 from unittest.mock import MagicMock, patch
-import openai
+from google.api_core.exceptions import GoogleAPIError
 
 import codex_agent
-from codex_agent import codex_agent, verify_openai_key
+from codex_agent import codex_agent, verify_gemini_key
 
 
 def test_codex_agent_returns_response(monkeypatch):
-    os.environ['OPENAI_API_KEY'] = 'test'
+    os.environ['GEMINI_API_KEY'] = 'test'
     codex_agent._client = None
-    mock_resp = MagicMock()
-    mock_choice = MagicMock()
-    mock_choice.message.content = 'hello'
-    mock_resp.choices = [mock_choice]
     mock_client = MagicMock()
-    mock_client.chat.completions.create.return_value = mock_resp
+    mock_client.generate_text.return_value = MagicMock(result='hello')
     with patch('codex_agent._get_client', return_value=mock_client):
         result = codex_agent('hi')
         assert result == 'hello'
-        mock_client.chat.completions.create.assert_called_once()
+        mock_client.generate_text.assert_called_once()
 
 
-def test_codex_agent_handles_openai_error(monkeypatch):
-    os.environ['OPENAI_API_KEY'] = 'test'
+def test_codex_agent_handles_gemini_error(monkeypatch):
+    os.environ['GEMINI_API_KEY'] = 'test'
     codex_agent._client = None
     mock_client = MagicMock()
-    mock_client.chat.completions.create.side_effect = openai.OpenAIError('fail')
+    mock_client.generate_text.side_effect = GoogleAPIError('fail')
     with patch('codex_agent._get_client', return_value=mock_client):
         result = codex_agent('hi')
         assert result == ''
-        mock_client.chat.completions.create.assert_called_once()
+        mock_client.generate_text.assert_called_once()
 
 
-def test_verify_openai_key_success(monkeypatch):
-    os.environ['OPENAI_API_KEY'] = 'test'
+def test_verify_gemini_key_success(monkeypatch):
+    os.environ['GEMINI_API_KEY'] = 'test'
     codex_agent._client = None
     mock_client = MagicMock()
-    mock_client.chat.completions.create.return_value = MagicMock()
+    mock_client.generate_text.return_value = MagicMock(result='pong')
     with patch('codex_agent._get_client', return_value=mock_client):
-        assert verify_openai_key()
-        mock_client.chat.completions.create.assert_called_once()
+        assert verify_gemini_key()
+        mock_client.generate_text.assert_called_once()
 
 
-def test_verify_openai_key_failure(monkeypatch):
-    os.environ['OPENAI_API_KEY'] = 'test'
+def test_verify_gemini_key_failure(monkeypatch):
+    os.environ['GEMINI_API_KEY'] = 'test'
     codex_agent._client = None
     mock_client = MagicMock()
-    mock_client.chat.completions.create.side_effect = openai.OpenAIError('fail')
+    mock_client.generate_text.side_effect = GoogleAPIError('fail')
     with patch('codex_agent._get_client', return_value=mock_client):
-        assert not verify_openai_key()
-        mock_client.chat.completions.create.assert_called_once()
+        assert not verify_gemini_key()
+        mock_client.generate_text.assert_called_once()
