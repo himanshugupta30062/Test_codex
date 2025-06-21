@@ -1,10 +1,11 @@
 # Test_codex
-This is a small demo showing how an environment can interact with the OpenAI API. The project expects **OpenAI Python >=1.0** and uses the new chat completion API.
+This is a small demo showing how an environment can interact with the Gemini API. The project now relies on Google's `google-generativeai` package.
 
-Set `OPENAI_API_KEY` in your environment before running `main.py` or the web demo:
+Set `GEMINI_API_KEY` in your environment before running `main.py` or the web demo.
+You can copy `.env.example` to `.env` and update the key there:
 
 ```bash
-export OPENAI_API_KEY=YOUR_KEY_HERE
+export GEMINI_API_KEY=YOUR_KEY_HERE
 ```
 
 ### Application configuration
@@ -17,10 +18,10 @@ JSON file. The following variables can be set:
 - `APP_CONFIG_FILE` – path to a JSON file containing `{"secret_key": "...", "users": {...}}`.
   Values from environment variables override the file.
 
-If you encounter compatibility errors with the OpenAI package, try upgrading or pinning the package version as specified in `requirements.txt`:
+If you encounter compatibility errors with the Gemini package, try upgrading or pinning the package version as specified in `requirements.txt`:
 
 ```bash
-pip install --upgrade openai  # or `pip install openai==<version>`
+pip install --upgrade google-generativeai
 ```
 
 ## Setup
@@ -44,13 +45,13 @@ Then open <http://localhost:5000> in your browser.
 
 ## Verifying your API key
 
-The `codex_agent` module exposes a helper function `verify_openai_key` that makes
-a tiny request to confirm your `OPENAI_API_KEY` is set correctly. Run the
+The `codex_agent` module exposes a helper function `verify_gemini_key` that makes
+a tiny request to confirm your `GEMINI_API_KEY` is set correctly. Run the
 following snippet to perform the check:
 
 ```python
-from codex_agent import verify_openai_key
-verify_openai_key()
+from codex_agent import verify_gemini_key
+verify_gemini_key()
 ```
 
 If the API returns an authentication error, the function will print a message
