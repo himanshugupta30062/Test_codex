@@ -9,6 +9,7 @@ from flask import (
     url_for,
     session,
 )
+from werkzeug.security import generate_password_hash, check_password_hash
 from codex_agent import codex_agent
 
 
@@ -16,6 +17,8 @@ def load_settings():
     """Load the Flask secret key and user credentials."""
     import json
     import os
+
+    import secrets
 
     config_path = os.getenv("APP_CONFIG_FILE")
     cfg = {}
@@ -26,7 +29,10 @@ def load_settings():
         except Exception:
             cfg = {}
 
-    secret_key = os.getenv("FLASK_SECRET_KEY", cfg.get("secret_key", "change-me"))
+    secret_key = os.getenv("FLASK_SECRET_KEY") or cfg.get("secret_key")
+    if not secret_key:
+        secret_key = secrets.token_hex(16)
+
     users_json = os.getenv("FLASK_USERS_JSON")
     if users_json:
         try:
@@ -36,7 +42,9 @@ def load_settings():
     else:
         users = cfg.get("users", {"admin": "password"})
 
-    return secret_key, users
+    hashed_users = {u: generate_password_hash(p) for u, p in users.items()}
+
+    return secret_key, hashed_users
 
 
 app = Flask(__name__)
@@ -65,6 +73,8 @@ def ask():
     data = request.get_json() or {}
     question = data.get('question', '')
     answer = codex_agent(question) if question else ''
+    if not answer:
+        answer = 'Sorry, an error occurred. Please try again later.'
     return jsonify({'answer': answer})
 
 
@@ -73,7 +83,8 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        if USERS.get(username) == password:
+        stored = USERS.get(username)
+        if stored and check_password_hash(stored, password):
             session['username'] = username
             return redirect(url_for('index'))
         return render_template('login.html', error='Invalid credentials')

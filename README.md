@@ -13,8 +13,8 @@ export GEMINI_API_KEY=YOUR_KEY_HERE
 The Flask demo reads its configuration from environment variables or an optional
 JSON file. The following variables can be set:
 
-- `FLASK_SECRET_KEY` – value for `app.secret_key` used to sign sessions.
-- `FLASK_USERS_JSON` – JSON object mapping usernames to passwords.
+- `FLASK_SECRET_KEY` – value for `app.secret_key` used to sign sessions. If not set, a random key is generated at startup.
+- `FLASK_USERS_JSON` – JSON object mapping usernames to passwords. Passwords are hashed on load using Werkzeug.
 - `APP_CONFIG_FILE` – path to a JSON file containing `{"secret_key": "...", "users": {...}}`.
   Values from environment variables override the file.
 
