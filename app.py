@@ -80,6 +80,22 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    """Simple sign-up page that stores new users in memory."""
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if not username or not password:
+            return render_template('signup.html', error='Missing credentials')
+        if username in USERS:
+            return render_template('signup.html', error='User already exists')
+        USERS[username] = password
+        session['username'] = username
+        return redirect(url_for('index'))
+    return render_template('signup.html')
+
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
