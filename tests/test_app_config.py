@@ -1,5 +1,6 @@
 import json
 import importlib
+from werkzeug.security import check_password_hash
 
 import pytest
 
@@ -15,7 +16,8 @@ def test_app_loads_from_env(monkeypatch):
     monkeypatch.setenv("FLASK_USERS_JSON", json.dumps({"u": "p"}))
     app = reload_app(monkeypatch)
     assert app.app.secret_key == "envsecret"
-    assert app.USERS == {"u": "p"}
+    assert "u" in app.USERS
+    assert check_password_hash(app.USERS["u"], "p")
 
 
 def test_app_loads_from_config(tmp_path, monkeypatch):
@@ -26,4 +28,5 @@ def test_app_loads_from_config(tmp_path, monkeypatch):
     monkeypatch.setenv("APP_CONFIG_FILE", str(cfg))
     app = reload_app(monkeypatch)
     assert app.app.secret_key == "cfgsecret"
-    assert app.USERS == {"a": "b"}
+    assert "a" in app.USERS
+    assert check_password_hash(app.USERS["a"], "b")
