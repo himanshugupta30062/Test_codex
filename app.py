@@ -101,7 +101,8 @@ def signup():
             return render_template('signup.html', error='Missing credentials')
         if username in USERS:
             return render_template('signup.html', error='User already exists')
-        USERS[username] = password
+        # store hashed password like other users
+        USERS[username] = generate_password_hash(password)
         session['username'] = username
         return redirect(url_for('index'))
     return render_template('signup.html')
